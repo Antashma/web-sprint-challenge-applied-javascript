@@ -19,19 +19,18 @@ axios.get('https://lambda-times-backend.herokuapp.com/topics')
         const topicArr = success.data.topics;
 
         //create the divs and add to DOM
-        topicArr.forEach((topic) => {
+        topicArr.forEach(
+            topic => 
             topicsDiv.appendChild(document.createElement('div'))
-        })
-
-        //style to all children but remove from span
-        Array.from(topicsDiv.children).forEach(child => child.classList.add('tab'))
-        Array.from(topicsDiv.children)[0].classList.toggle('tab')
-
-        document.querySelectorAll('div .tab').forEach((tab, index) => {
-            tab.innerHTML = topicArr[index]
-        })
+        )
         
-        //console for testing
+        //add class and text to new divs
+        document.querySelectorAll('.topics div').forEach(
+            (div, index) => {
+                div.classList.add('tab')
+                div.innerHTML = topicArr[index]
+            })
+        
         //console.log(topicsDiv)  
     })
     .catch(
