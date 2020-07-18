@@ -20,3 +20,76 @@
 // Add a listener for click events so that when a user clicks on a card, the headline of the article is logged to the console.
 //
 // Use your function to create a card for each of the articles, and append each card to the DOM.
+const cardsContainer = document.querySelector('.cards-container');
+axios.get('https://lambda-times-backend.herokuapp.com/articles')
+    .then(
+        (success) => {
+        console.log('Cards.js Axios','Hooray! 🤩', success)
+        const articleData = success.data.articles
+        articleData.javascript.forEach((article, index) =>
+            cardsContainer.appendChild(
+                articleMaker(articleData.javascript[index])
+                )
+            );
+        articleData.bootstrap.forEach((article, index) =>
+            cardsContainer.appendChild(
+                articleMaker(articleData.bootstrap[index])
+                )
+            );
+        articleData.technology.forEach((article, index) =>
+            cardsContainer.appendChild(
+                articleMaker(articleData.technology[index])
+                )
+            );
+        articleData.jquery.forEach((article, index) =>
+            cardsContainer.appendChild(
+                articleMaker(articleData.jquery[index])
+                )
+            );
+        articleData.node.forEach((article, index) =>
+            cardsContainer.appendChild(
+                articleMaker(articleData.node[index])
+                )
+            );
+        }
+    )
+    .catch(
+        (error) =>
+        console.log('Axios from Cards.js says: Aw, man... 😫', error)
+    )
+
+
+    function articleMaker(topic) {
+        //create elements
+        const card = document.createElement('div')
+        const headline = document.createElement('div')
+        const authorDiv = document.createElement('div')
+        const imgContainer = document.createElement('div')
+        const img = document.createElement('img')
+        const authorSpan = document.createElement('span')
+
+        //add classes
+        card.classList.add('card')
+        headline.classList.add('headline')
+        authorDiv.classList.add('author')
+        imgContainer.classList.add('img-container')
+
+        //add content
+        headline.textContent = topic.headline
+        authorSpan.textContent = topic.authorName
+        img.src =  topic.authorPhoto
+
+        //append children
+        const cardChildren = [headline, authorDiv]
+        const authorChildren = [imgContainer, authorSpan]
+    
+        cardChildren.forEach(child => card.appendChild(child))
+        authorChildren.forEach(child => authorDiv.appendChild(child))
+        imgContainer.appendChild(img)
+
+        //add event listener
+        card.addEventListener('click', ()=> console.log(topic.headline))
+
+        //console.log(topic)
+        return card
+    }
