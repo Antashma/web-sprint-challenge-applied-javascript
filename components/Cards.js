@@ -20,18 +20,21 @@
 // Add a listener for click events so that when a user clicks on a card, the headline of the article is logged to the console.
 //
 // Use your function to create a card for each of the articles, and append each card to the DOM.
+const cardsContainer = document.querySelector('.cards-container');
 
 axios.get('https://lambda-times-backend.herokuapp.com/articles')
     .then(
         (success) => {
-        console.log('Hooray! 🤩', success)
-        articleMaker();
+        console.log('Axios from Cards.js says: Hooray! 🤩', success)
+        const articleData = success.data.articles
+        cardsContainer.appendChild(articleMaker(articleData.javascript));
         }
     )
     .catch(
         (error) =>
-        console.log('Aw, man... 😫', error)
+        console.log('Axios from Cards.js says: Aw, man... 😫', error)
     )
+
 
     function articleMaker(data) {
         //create elements
@@ -48,11 +51,20 @@ axios.get('https://lambda-times-backend.herokuapp.com/articles')
         authorDiv.classList.add('author')
         imgContainer.classList.add('img-container')
 
-        
-        
-        
+        //add content
+        headline.textContent = 'HELLO WORLD'
+        authorSpan.textContent = 'hello hello'
+        //img.src
+
+        //append children
+        const cardChildren = [headline, authorDiv]
+        const authorChildren = [imgContainer, authorSpan]
+    
+        cardChildren.forEach(child => card.appendChild(child))
+        authorChildren.forEach(child => authorDiv.appendChild(child))
+        imgContainer.appendChild(img)
 
 
-        console.log('you called the article maker sucessfully!')
-        return
+        console.log(data, card)
+        return card
     }
