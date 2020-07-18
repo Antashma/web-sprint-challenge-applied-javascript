@@ -16,10 +16,7 @@ axios.get('https://lambda-times-backend.herokuapp.com/topics')
     .then(
         (success) => {
         console.log('Yay! 😃', success)
-        const topicArr = success.data.topics;
-
-        //create the divs and add to DOM
-        topicArr.forEach(
+        success.data.topics.forEach(
             topic => 
             topicsDiv.appendChild(document.createElement('div'))
         )
@@ -28,7 +25,7 @@ axios.get('https://lambda-times-backend.herokuapp.com/topics')
         document.querySelectorAll('.topics div').forEach(
             (div, index) => {
                 div.classList.add('tab')
-                div.innerHTML = topicArr[index]
+                div.innerHTML = success.data.topics[index]
             })
         
         //console.log(topicsDiv)  
