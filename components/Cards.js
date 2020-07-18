@@ -21,13 +21,36 @@
 //
 // Use your function to create a card for each of the articles, and append each card to the DOM.
 const cardsContainer = document.querySelector('.cards-container');
-
 axios.get('https://lambda-times-backend.herokuapp.com/articles')
     .then(
         (success) => {
         console.log('Axios from Cards.js says: Hooray! 🤩', success)
         const articleData = success.data.articles
-        cardsContainer.appendChild(articleMaker(articleData.javascript));
+        articleData.javascript.forEach((article, index) =>
+            cardsContainer.appendChild(
+                articleMaker(articleData.javascript[index])
+                )
+            );
+        articleData.bootstrap.forEach((article, index) =>
+            cardsContainer.appendChild(
+                articleMaker(articleData.bootstrap[index])
+                )
+            );
+        articleData.technology.forEach((article, index) =>
+            cardsContainer.appendChild(
+                articleMaker(articleData.technology[index])
+                )
+            );
+        articleData.jquery.forEach((article, index) =>
+            cardsContainer.appendChild(
+                articleMaker(articleData.jquery[index])
+                )
+            );
+        articleData.node.forEach((article, index) =>
+            cardsContainer.appendChild(
+                articleMaker(articleData.node[index])
+                )
+            );
         }
     )
     .catch(
@@ -36,7 +59,7 @@ axios.get('https://lambda-times-backend.herokuapp.com/articles')
     )
 
 
-    function articleMaker(data) {
+    function articleMaker(topic) {
         //create elements
         const card = document.createElement('div')
         const headline = document.createElement('div')
@@ -52,9 +75,9 @@ axios.get('https://lambda-times-backend.herokuapp.com/articles')
         imgContainer.classList.add('img-container')
 
         //add content
-        headline.textContent = 'HELLO WORLD'
-        authorSpan.textContent = 'hello hello'
-        //img.src
+        headline.textContent = topic.headline
+        authorSpan.textContent = topic.authorName
+        img.src =  topic.authorPhoto
 
         //append children
         const cardChildren = [headline, authorDiv]
@@ -64,7 +87,9 @@ axios.get('https://lambda-times-backend.herokuapp.com/articles')
         authorChildren.forEach(child => authorDiv.appendChild(child))
         imgContainer.appendChild(img)
 
+        //add event listener
+        card.addEventListener('click', ()=> console.log(topic.headline))
 
-        console.log(data, card)
+        console.log(topic)
         return card
     }
