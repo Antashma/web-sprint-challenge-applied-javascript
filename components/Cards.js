@@ -24,7 +24,7 @@ const cardsContainer = document.querySelector('.cards-container');
 axios.get('https://lambda-times-backend.herokuapp.com/articles')
     .then(
         (success) => {
-        console.log('Axios from Cards.js says: Hooray! 🤩', success)
+        console.log('Cards.js Axios','Hooray! 🤩', success)
         const articleData = success.data.articles
         articleData.javascript.forEach((article, index) =>
             cardsContainer.appendChild(
@@ -90,6 +90,6 @@ axios.get('https://lambda-times-backend.herokuapp.com/articles')
         //add event listener
         card.addEventListener('click', ()=> console.log(topic.headline))
 
-        console.log(topic)
+        //console.log(topic)
         return card
     }

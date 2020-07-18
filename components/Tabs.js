@@ -15,7 +15,7 @@ const topicsDiv = document.querySelector('.topics')
 axios.get('https://lambda-times-backend.herokuapp.com/topics')
     .then(
         (success) => {
-        console.log('Yay! 😃', success)
+        console.log('Tabs.js Axios:', 'Yay! 😃', success)
         success.data.topics.forEach(
             topic => 
             topicsDiv.appendChild(document.createElement('div'))
