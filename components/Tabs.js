@@ -10,13 +10,31 @@
 //
 // NOTE: you do _not_ need to install axios as it's included in the HTML via script element
 
+const topicsDiv = document.querySelector('.topics')
+
 axios.get('https://lambda-times-backend.herokuapp.com/topics')
     .then(
-        (sucessResponse) => {
-        console.log('Yay! 😃', sucessResponse)
+        (success) => {
+        console.log('Yay! 😃', success)
+        const topicArr = success.data.topics;
 
+        //create the divs and add to DOM
+        topicArr.forEach((topic) => {
+            topicsDiv.appendChild(document.createElement('div'))
+        })
+
+        //style to all children but remove from span
+        Array.from(topicsDiv.children).forEach(child => child.classList.add('tab'))
+        Array.from(topicsDiv.children)[0].classList.toggle('tab')
+
+        document.querySelectorAll('div .tab').forEach((tab, index) => {
+            tab.innerHTML = topicArr[index]
+        })
+        
+        //console for testing
+        //console.log(topicsDiv)  
     })
     .catch(
-        (errorResponse) => {
-            console.log('Oops! 😮', errorResponse)
+        (error) => {
+            console.log('Oops! 😮', error)
         })
